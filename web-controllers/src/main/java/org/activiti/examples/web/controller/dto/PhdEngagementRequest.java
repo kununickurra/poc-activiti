@@ -23,4 +23,12 @@ public class PhdEngagementRequest {
     public void setMotivation(String motivation) {
         this.motivation = motivation;
     }
+
+    @Override
+    public String toString() {
+        return "PhdEngagementRequest{" +
+                "name='" + name + '\'' +
+                ", motivation='" + motivation + '\'' +
+                '}';
+    }
 }

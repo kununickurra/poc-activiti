@@ -11,9 +11,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-/**
- * Created by nitillie on 12-02-16.
- */
 public class AbstractRepositoryImpl<T, PK extends Serializable> implements AbstractRepository<T, PK> {
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());

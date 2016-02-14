@@ -8,13 +8,14 @@ import org.activiti.examples.domain.repository.PhdEngagementRepository;
 import org.activiti.examples.domain.repository.PromotorRepository;
 import org.activiti.examples.domain.repository.StudentRepository;
 import org.activiti.examples.web.controller.dto.PhdEngagementRequest;
+import org.activiti.examples.web.controller.dto.PhdEngagementResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,20 +25,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/student")
 public class StudentController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
-    @Autowired
+    @Resource
     private ProcessService processService;
 
-    @Autowired
+    @Resource
     private StudentRepository studentRepository;
 
-    @Autowired
+    @Resource
     private PhdEngagementRepository phdEngagementRepository;
 
-    @Autowired
+    @Resource
     private PromotorRepository promotorRepository;
-
-    private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -48,9 +48,10 @@ public class StudentController {
 
 
     @RequestMapping(value = "/{userName}/phd", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
     @Transactional
-    public String newPhdEngagementRequest(@PathVariable String userName, @RequestBody PhdEngagementRequest request) {
+    public PhdEngagementResponse newPhdEngagementRequest(@PathVariable String userName, @RequestBody PhdEngagementRequest request) {
         LOG.info("newPhdEngagementRequest method called with request {}", request);
         Student student = studentRepository.findById(userName);
         if (student == null) {
@@ -70,14 +71,16 @@ public class StudentController {
         phdEngagementRepository.saveOrUpdate(engagement);
 
         student.setPhdEngagement(engagement);
+        studentRepository.saveOrUpdate(student);
 
         Map<String, Object> formData = new HashMap<>();
         formData.put("motivation", engagement.getMotivation());
 
-        studentRepository.saveOrUpdate(student);
-
         String processId = processService.startProcess("phd", student, formData);
-        return "Phd Process started, thanks for submission...";
+        PhdEngagementResponse response = new PhdEngagementResponse();
+        response.setMessage("Phd Process started, thanks for submission...");
+        response.setProcessId(processId);
+        return response;
     }
 
     @RequestMapping(value = "/{userName}/phd", method = RequestMethod.GET)

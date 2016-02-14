@@ -3,9 +3,6 @@ package org.activiti.examples.domain.repository;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by nitillie on 12-02-16.
- */
 public interface AbstractRepository<T, PK extends Serializable>{
 
 

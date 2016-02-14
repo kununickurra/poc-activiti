@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/promotor")
-
 public class PromotorController {
 
     @Autowired

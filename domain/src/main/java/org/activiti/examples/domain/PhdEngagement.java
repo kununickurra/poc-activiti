@@ -13,6 +13,9 @@ public class PhdEngagement implements Serializable {
     @Column
     private String motivation;
 
+    @Column
+    private EngagementStatus engagementStatus;
+
     @OneToOne
     private Student student;
 
@@ -31,5 +34,21 @@ public class PhdEngagement implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public EngagementStatus getEngagementStatus() {
+        return engagementStatus;
+    }
+
+    public void setEngagementStatus(EngagementStatus engagementStatus) {
+        this.engagementStatus = engagementStatus;
     }
 }
