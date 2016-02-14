@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/registration")
-public class UserController {
+public class StudentController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
