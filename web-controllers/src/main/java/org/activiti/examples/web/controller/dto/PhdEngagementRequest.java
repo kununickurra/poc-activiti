@@ -6,8 +6,7 @@ package org.activiti.examples.web.controller.dto;
 public class PhdEngagementRequest {
 
     private String name;
-    private int age;
-    private String email;
+    private String motivation;
 
     public String getName() {
         return name;
@@ -17,19 +16,11 @@ public class PhdEngagementRequest {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getMotivation() {
+        return motivation;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
     }
 }

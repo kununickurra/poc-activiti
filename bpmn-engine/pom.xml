@@ -9,7 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rule-engine</artifactId>
-
-
+    <artifactId>bpmn-engine</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.activiti.examples</groupId>
+            <artifactId>business-processes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti.examples</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+        </dependency>
+    </dependencies>
 </project>

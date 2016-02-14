@@ -1,33 +1,47 @@
 package org.activiti.example.bpmn.engine;
 
-import org.activiti.bpmn.model.Task;
-import org.activiti.examples.domain.Person;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.task.Task;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@Service
 public class TasksService {
 
     @Resource
-    private TasksService taskService;
+    private ProcessEngine processEngine;
 
-    public List<Task> getMyPendingTasks(Person person) {
+    @Resource
+    private TaskService taskService;
 
-        List<Task> tasks= taskService.createTaskQuery().processDefinitionKey("myProcess").taskDefinitionKey("usertask1").list();
-        for(Task task:tasks){
-            taskService.claim(task.getId(), "DJ");
-            TaskFormData taskFormData = processEngine.getFormService().getTaskFormData(task.getId());
-            Map<String, Object> variableMap = new HashMap<String, Object>();
-            variableMap.put("HumanTaskCompletedBy", "DJ");
-            variableMap.put("name", "super nico");
-            taskService.complete(task.getId(),variableMap);
-        }
+    public List<ProcessTask> getMyPendingTasks(String userName) {
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(userName).list();
+        return tasks.stream().map(t -> buildProcessTask(t)).collect(Collectors.toList());
     }
 
-    public void getMyPendingTasks(Person person) {
+    public List<ProcessTask> getGroupPendingTasks(String groupName) {
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(groupName).list();
+        return tasks.stream().map(t -> buildProcessTask(t)).collect(Collectors.toList());
+    }
 
+    public void claimTask(String taskId, String userName) {
+        taskService.claim(taskId, userName);
+    }
+
+    public void completeTask(String taskId, String userName, Map<String, Object> formData) {
+
+        taskService.complete(taskId, formData);
+    }
+
+    private ProcessTask buildProcessTask(Task task) {
+        TaskFormData taskFormData = processEngine.getFormService().getTaskFormData(task.getId());
+        return new ProcessTask(task, taskFormData);
     }
 
 
