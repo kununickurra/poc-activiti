@@ -5,7 +5,6 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,7 +34,9 @@ public class TasksService {
         taskService.claim(taskId, userName);
     }
 
+
     public void completeTask(String taskId, String userName, Map<String, Object> formData) {
+        formData.put("completedBy", userName);
         taskService.complete(taskId, formData);
     }
 

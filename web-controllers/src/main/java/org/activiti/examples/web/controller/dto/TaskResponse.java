@@ -9,6 +9,7 @@ public class TaskResponse {
     private String taskName;
     private String description;
     private String requiredInput;
+    private String initiator;
 
     public String getTaskId() {
         return taskId;
@@ -40,5 +41,13 @@ public class TaskResponse {
 
     public void setRequiredInput(String requiredInput) {
         this.requiredInput = requiredInput;
+    }
+
+    public String getInitiator() {
+        return initiator;
+    }
+
+    public void setInitiator(String initiator) {
+        this.initiator = initiator;
     }
 }

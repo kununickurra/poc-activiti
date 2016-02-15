@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.activiti.examples.domain.EngagementStatus.REQUESTED;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -54,6 +56,8 @@ public class StudentController {
     public PhdEngagementResponse newPhdEngagementRequest(@PathVariable String userName, @RequestBody PhdEngagementRequest request) {
         LOG.info("newPhdEngagementRequest method called with request {}", request);
         Student student = studentRepository.findById(userName);
+
+        // For testing purpose only, create the student & linked promotor if it does not exists yet.
         if (student == null) {
             student = new Student();
             student.setUserName(userName);
@@ -68,15 +72,22 @@ public class StudentController {
         PhdEngagement engagement = new PhdEngagement();
         engagement.setStudent(student);
         engagement.setMotivation(request.getMotivation());
+        engagement.setEngagementStatus(REQUESTED);
         phdEngagementRepository.saveOrUpdate(engagement);
 
         student.setPhdEngagement(engagement);
         studentRepository.saveOrUpdate(student);
 
-        Map<String, Object> formData = new HashMap<>();
-        formData.put("motivation", engagement.getMotivation());
+        // Set process variables
+        Map<String, Object> inputData = new HashMap<>();
+        inputData.put("motivation", engagement.getMotivation());
 
-        String processId = processService.startProcess("phd", student, formData);
+        String processId = processService.startProcess("phd", student.getUserName(), inputData);
+
+        // Save the process ID into the engagement.
+        engagement.setProcessId(processId);
+        phdEngagementRepository.saveOrUpdate(engagement);
+
         PhdEngagementResponse response = new PhdEngagementResponse();
         response.setMessage("Phd Process started, thanks for submission...");
         response.setProcessId(processId);

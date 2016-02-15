@@ -14,11 +14,9 @@ public class ProcessService {
     @Resource
     private RuntimeService runtimeService;
 
-    public String startProcess(String processName, Student initiator, Map<String, Object> parameters) {
-        parameters.put("student", initiator);
+    public String startProcess(String processName, String initiator, Map<String, Object> parameters) {
+        parameters.put("studentId", initiator);
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processName, parameters);
         return processInstance.getId();
     }
-
-
 }

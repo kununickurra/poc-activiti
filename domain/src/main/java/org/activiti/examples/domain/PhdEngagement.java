@@ -14,6 +14,9 @@ public class PhdEngagement implements Serializable {
     private String motivation;
 
     @Column
+    private String processId;
+
+    @Column
     private EngagementStatus engagementStatus;
 
     @OneToOne
@@ -22,6 +25,14 @@ public class PhdEngagement implements Serializable {
 
     public String getMotivation() {
         return motivation;
+    }
+
+    public String getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(String processId) {
+        this.processId = processId;
     }
 
     public void setMotivation(String motivation) {

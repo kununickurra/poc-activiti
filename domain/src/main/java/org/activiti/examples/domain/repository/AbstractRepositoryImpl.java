@@ -11,7 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class AbstractRepositoryImpl<T, PK extends Serializable> implements AbstractRepository<T, PK> {
+public class AbstractRepositoryImpl<T, PK extends Serializable> implements AbstractRepository<T, PK>, Serializable {
 
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 

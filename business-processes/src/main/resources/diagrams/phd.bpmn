@@ -6,7 +6,7 @@
         <activiti:formProperty id="motivation" name="motivation" type="string"></activiti:formProperty>
       </extensionElements>
     </startEvent>
-    <userTask id="approvePhdRequest" name="approve Phd Request" activiti:assignee="${student.promotor.userName}" isForCompensation="true">
+    <userTask id="approvePhdRequest" name="approve Phd Request" activiti:assignee="${studentRepository.findById(studentId).promotor.userName}" isForCompensation="true">
       <extensionElements>
         <activiti:formProperty id="approved" name="Do you approve the request ?" type="string">
           <activiti:value id="true" name="Approve"></activiti:value>
@@ -17,7 +17,7 @@
     <sequenceFlow id="flow1" sourceRef="startevent" targetRef="approvePhdRequest"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow2" sourceRef="approvePhdRequest" targetRef="exclusivegateway1"></sequenceFlow>
-    <serviceTask id="servicetask1" name="Service Task" activiti:expression="${System.out.println(&quot;Very bad idea my fiend&quot;)}"></serviceTask>
+    <serviceTask id="servicetask1" name="Service Task" activiti:expression="${phdRequestApprovedDelegate.registerApproval(studentRepository.findById(studentId).userName)}"></serviceTask>
     <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="servicetask1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approved == 'true'}]]></conditionExpression>
     </sequenceFlow>

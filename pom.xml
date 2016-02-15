@@ -41,6 +41,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Sub modules -->
             <dependency>
                 <groupId>org.activiti.examples</groupId>
                 <artifactId>bpmn-engine</artifactId>
@@ -61,22 +62,24 @@
                 <artifactId>web-controllers</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-beans</artifactId>-->
-            <!--<version>${org.springframework.version}</version>-->
-            <!--</dependency>-->
+            <!-- Activiti engine & Spring integration -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-engine</artifactId>
+                <version>${activiti-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring</artifactId>
+                <version>${activiti-version}</version>
+            </dependency>
+            <!-- Spring DI Dependencies -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-                <scope>runtime</scope>
-            </dependency>
+            <!-- Spring & Hibernate persistence -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
@@ -97,27 +100,11 @@
                 <artifactId>hibernate-core</artifactId>
                 <version>${org.hibernate.version}</version>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-entitymanager</artifactId>-->
-            <!--<version>${org.hibernate.version}</version>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-annotations</artifactId>
                 <version>${org.hibernate.annotation.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.activiti</groupId>
-                <artifactId>activiti-engine</artifactId>
-                <version>${activiti-version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.activiti</groupId>
-                <artifactId>activiti-spring</artifactId>
-                <version>${activiti-version}</version>
-            </dependency>
-
             <!-- Web -->
             <!-- JSON marshalling libraries -->
             <dependency>
@@ -132,11 +119,14 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
+                <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
-
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-web</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
             <!-- Persistence -->
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -149,6 +139,12 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${org.slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${org.slf4j.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <!-- Test Dependencies -->
             <dependency>
